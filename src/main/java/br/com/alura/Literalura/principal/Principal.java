@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 public class Principal {
     private final LivrosRepositorio repositorio;
-
     Scanner imput = new Scanner(System.in);
     int exit = 0;
 
@@ -19,14 +18,17 @@ public class Principal {
 
         while (opcao != 9){
             System.out.println("""
-                    \n-> Escolha uma Opção:
-                    \n1 - Buscar Livro pelo Título
-                    \n2 - Listar Livros Registrados
-                    \n3 - Listar Autores Registrados
-                    \n4 - Listar Autores Vivos em um Determinado Ano
-                    \n5 - Listar Livros em um Determinado Idioma
-                    \n0 - Sair
+                    \n------------------------------------------------------:
+                       1 - Buscar Livro pelo Título
+                       2 - Listar Livros Registrados
+                       3 - Listar Autores Registrados
+                       4 - Listar Autores Vivos em um Determinado Ano
+                       5 - Listar Livros em um Determinado Idioma
+                       0 - Sair
                     """);
+            System.out.print("-> Escolha uma Opção: ");
+            opcao = imput.nextInt();
+            imput.nextLine();
         }
     }
 }
