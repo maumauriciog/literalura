@@ -23,10 +23,10 @@ public class Autor {
     public Autor() {
     }
 
-    public Autor(AutorDTO dadosAutor) {
-        this.nome = String.valueOf(dadosAutor.nome());
-        this.anoNascimento = Integer.valueOf(dadosAutor.anoNascimento());
-        this.anoFalecimento = Integer.valueOf(dadosAutor.anoFalecimento());
+    public Autor(AutorDTO infoAutor) {
+        this.nome = String.valueOf(infoAutor.nome());
+        this.anoNascimento = Integer.valueOf(infoAutor.anoDeNascimento());
+        this.anoFalecimento = Integer.valueOf(infoAutor.anoFalecimento());
     }
 
     public String getNome() {
