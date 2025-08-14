@@ -1,4 +1,4 @@
-package br.com.alura.Literalura.service;
+package br.com.alura.Literalura.servico;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ConverteDados {
     private ObjectMapper mapper = new ObjectMapper();
 
-    @Override
     public <T> T obterDados(String json, Class<T> classe) {
         try {
             return mapper.readValue(json, classe);
