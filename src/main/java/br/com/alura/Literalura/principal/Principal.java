@@ -83,14 +83,13 @@ public class Principal {
         }
     }
 
-
     //Lista TODOS OS LIVROS NO IDIOMA ESPECIFICADO PELO USUÁRIO
     private void LivroNoIdioma() {
         System.out.println("-> Informe o Idioma do livro, optando pelas opções conforme abaixo, para a Pesquisa: ");
         System.out.print("        EN (Inglês) - ES (espanhol) - FR (francês) ou PT (português) ");
         var idioma = imput.nextLine();
 
-        List<Livro> livros = livrosRepositorio.findByIdioma(idioma);
+        List<Livro> livros = livrosRepositorio.ListarPorIdioma(idioma);
 
         if (livros == null) {
             System.out.println("\n   ------- NÃO HÁ LIVROS COM O IDIOMA " + idioma + ", CADASTRADO NO BANCO DE DADOS -------");
@@ -111,24 +110,21 @@ public class Principal {
             System.out.println("\n   ------- NÃO HÁ REGISTRO DE AUTORES CADASTRADO NO BANCO DE DADOS -------");
         } else {
             System.out.println("\n  <------- Listando AUTORES VIVOS A PARTIR DO ANO DE " + ano + " do Banco de Dados ------->");
-            System.out.println(autoresVivo.toString());;
+            System.out.println(autoresVivo.toString());
+            ;
         }
     }
 
 
     //Lista todos os autores Registrados no Banco de Dados
     private void listaAutoresRegistrados() {
-        Autor autor;
-
         List<Autor> autores = autorRepositorio.findAll();
 
         if (autores.isEmpty()) {
             System.out.println("\n     --- Nenhum AUTOR Encontrado ---");
         } else {
-            System.out.println("\n     ------- Listando AUTORES do Banco de Dados -------");
-            autores.stream()
-                    .sorted(Comparator.comparing(Autor::getNome))
-                    .forEach(System.out::println);
+            System.out.println("\n     ------- LISTANDO AUTORES NO BANCO DE DADOS -------");
+            System.out.println(autores);
         }
     }
 
@@ -140,7 +136,7 @@ public class Principal {
         if (livrosBD.isEmpty()) {
             System.out.println("\n     --- Nenhum LIVRO Encontrado ---");
         } else {
-            System.out.println("\n    ------- Livros ARMAZENADOS no Banco de Dados -------\n");
+            System.out.println("\n    ------- LIVROS ARMAZENADOS NO BANCO DE DADOS -------");
             livrosBD.stream()
                     .sorted(Comparator.comparing(l -> l.getTitulo()))
                     .forEach(System.out::println);

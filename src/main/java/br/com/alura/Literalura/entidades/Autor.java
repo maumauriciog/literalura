@@ -24,7 +24,7 @@ public class Autor {
     private int anoFalecimento;
 
     @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Livro> livros;
+    private List<Livro> livros = new ArrayList<>();
 
     public Autor() {
     }
@@ -33,7 +33,6 @@ public class Autor {
         this.nome = autorDTO.nome();
         this.anoNascimento = autorDTO.anoDeNascimento();
         this.anoFalecimento = autorDTO.anoFalecimento();
-        this.livros = new ArrayList<>();
     }
 
     public Long getId() {
@@ -68,11 +67,10 @@ public class Autor {
         this.anoFalecimento = anoFalecimento;
     }
 
-    public List<Livro> getLivros() {
-        return livros;
-    }
-
-    public void setLivros(List<Livro> livros) {
-        this.livros = livros;
+    @Override
+    public String toString() {
+        return "     -> Nome Autor = " + nome + "\n" +
+                "      -> Ano de Nascimento = " + anoNascimento + "\n" +
+                "      -> Ano do Falecimento = " + anoFalecimento + "\n\n          -----\n";
     }
 }

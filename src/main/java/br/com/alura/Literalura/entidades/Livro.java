@@ -1,14 +1,8 @@
 package br.com.alura.Literalura.entidades;
 
 import br.com.alura.Literalura.DTO.LivroDTO;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -33,7 +27,7 @@ public class Livro {
     public Livro(LivroDTO livroDTO) {
         this.titulo = livroDTO.titulo();
         this.autor = (Autor) livroDTO.autor();
-        this.idioma = Collections.singletonList(livroDTO.validarIdioma());
+        this.idioma = livroDTO.idioma();
         this.nDownloads = livroDTO.nDownloads();
     }
 
@@ -77,4 +71,11 @@ public class Livro {
         this.autor = autores;
     }
 
+    @Override
+    public String toString() {
+        return "    -> Título: " + titulo + "\n" +
+                "    -> Autor: " + autor + "\n" +
+                "    -> Idioma: " + idioma + "\n" +
+                "    -> N. Downoads: " + nDownloads + "\n\n          -----\n";
+    }
 }

@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface LivrosRepositorio extends JpaRepository<Livro, Long> {
 
-    @Query("SELECT l FROM Livro l JOIN FETCH l.autor WHERE l.idioma = :idioma")
-    List<Livro> findByIdioma(String idioma);
+    @Query(value = "SELECT * FROM livros WHERE :idioma = ANY(idioma)", nativeQuery = true)
+    List<Livro> ListarPorIdioma(String idioma);
 }
