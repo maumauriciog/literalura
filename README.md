@@ -47,8 +47,13 @@ O usuário poderá escolher uma das 05(cinco) opções disponíveis conforme aba
 -> Qual o Nome do Livro para a Busca: dom quixote
 ```
 ```bash
-     *** Resultado da Operação ***
-     Valor de 100.0[BRL], corresponde ao valor final de 17.52[USD]
+**** LIVRO ENCONTRADO ****
+    -> Título: Emma
+    -> Autor:  Austen, Jane, anoDeNascimento=1775, anoFalecimento=1817
+    -> Idioma: [en]
+    -> N. Downoads: 69806
+
+          -----
 ```
 
 ## Contribuindo
