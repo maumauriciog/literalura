@@ -43,12 +43,11 @@ public class Principal {
             \n:----------------------------------------------------:
             :---      LITERALURA - PESQUISE SEU LIVRO        ----:
             :----------------------------------------------------:
-            
                1 - Buscar Livro pelo Título
                2 - Listar Livros Registrados
                3 - Listar Autores Registrados
                4 - Listar Autores Vivos em um Determinado Ano
-               5 - Listar Livros em um Determinado Idioma
+               5 - Listar Livros em Um Determinado Idioma
                0 - Sair
             
                -> Escolha uma Opção:
@@ -65,29 +64,59 @@ public class Principal {
                     buscarLivroPorTitulo();
                     break;
                 case 2:
-                    listarLivrosRegistrados();
+                    listaLivrosRegistrados();
                     break;
                 case 3:
-                    listarAutoresRegistrados();
+                    listaAutoresRegistrados();
                     break;
+                case 4:
+                    AutoresVivosNesteAno();
+                    break;
+                case 5:
+                    LivroNoIdioma();
+                    break;
+
                 case 0:
                     System.out.println("-> Encerrando o programa...");
                 default:
-                    System.out.println("         ----- opção inválida -----");
+                    System.out.println("        <----- OPÇÃO INVÁLIDA ----->");
             }
         }
     }
 
+
+    //Lista TODOS OS LIVROS NO IDIOMA ESPECIFICADO PELO USUÁRIO
+    private void LivroNoIdioma() {
+
+    }
+
+    //Lista TODOS OS AUTORES VIVOS no ano especificado pelo usuário
+    private void AutoresVivosNesteAno() {
+        System.out.print("-> Informe o Ano Para a Pesquisa: ");
+        var ano = imput.nextInt();
+        imput.nextLine();
+
+        List<Autor> autoresVivo = autorRepositorio.ListaAutoresVivosApartAno(ano);
+
+        if (autoresVivo.isEmpty()){
+            System.out.println("\n   ------- NÃO HÁ REGISTRO DE AUTORES CADASTRADO NO BANCO DE DADOS -------");
+        }else {
+            System.out.println("\n  <------- Listando AUTORES VIVOS A PARTIR DO ANO DE " + ano + " do Banco de Dados ------->");
+            autoresVivo.forEach(System.out::println);
+        }
+    }
+
+
     //Lista todos os autores Registrados no Banco de Dados
-    private void listarAutoresRegistrados() {
+    private void listaAutoresRegistrados() {
         Autor autor;
 
         List<Autor> autores = autorRepositorio.findAll();
 
         if (autores.isEmpty()) {
             System.out.println("\n     --- Nenhum AUTOR Encontrado ---");
-        }else{
-            System.out.println("\n     ------- Listando Autores do Banco de Dados -------");
+        } else {
+            System.out.println("\n     ------- Listando AUTORES do Banco de Dados -------");
             autores.stream()
                     .sorted(Comparator.comparing(Autor::getNome))
                     .forEach(System.out::println);
@@ -95,7 +124,7 @@ public class Principal {
     }
 
     //Lista todos os livros registrados no Banco de Dados
-    private void listarLivrosRegistrados() {
+    private void listaLivrosRegistrados() {
         Livro livro;
         List<Livro> livrosBD = livrosRepositorio.findAll();
 
