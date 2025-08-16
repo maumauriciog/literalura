@@ -1,6 +1,5 @@
 package br.com.alura.Literalura.DTO;
 
-import br.com.alura.Literalura.entidades.Idioma;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -11,8 +10,26 @@ public record LivroDTO(
         @JsonAlias("id") Long id,
         @JsonAlias("title") String titulo,
         @JsonAlias("authors") List<AutorDTO> autor,
-        @JsonAlias("languages") Idioma idiomas,
-        @JsonAlias("download_count") Integer nDownloads
-        ) {
+        @JsonAlias("languages") List<String> idioma,
+        @JsonAlias("download_count") int nDownloads
+        ){
 
+        public String validarIdioma(){
+                if(idioma!=null && idioma.isEmpty()){
+                        return idioma.get(0);
+                }else{
+                        return "-- Idioma Desconhecido --";
+                }
+        }
+
+        @Override
+        public String toString() {
+                return "\n----------------------------\n" +
+                        "---- Livro Encontrado -----\n" +
+                        "-\n" +
+                        "---> Título: " + titulo + "\n" +
+                        "---> Autor: " + autor + "\n" +
+                        "---> Idioma: " + validarIdioma() + "\n" +
+                        "---> N. Downoads: " + nDownloads + "\n";
+        }
 }

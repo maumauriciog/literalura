@@ -4,21 +4,18 @@ import br.com.alura.Literalura.DTO.AutorDTO;
 import br.com.alura.Literalura.DTO.InfoLivros;
 import br.com.alura.Literalura.DTO.LivroDTO;
 import br.com.alura.Literalura.entidades.Autor;
-import br.com.alura.Literalura.entidades.Idioma;
 import br.com.alura.Literalura.entidades.Livro;
 import br.com.alura.Literalura.repositorio.AutorRepositorio;
 import br.com.alura.Literalura.repositorio.LivrosRepositorio;
 import br.com.alura.Literalura.servico.ConsumoAPI;
 import br.com.alura.Literalura.servico.ConverteDados;
-import org.hibernate.query.NativeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.swing.text.html.Option;
-import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Scanner;
 
 @Component
 public class Principal {
@@ -30,7 +27,7 @@ public class Principal {
 
     Scanner imput = new Scanner(System.in);
 
-    private static final String URL = "https://gutendex.com/books?search=";
+    private static final String URL = "https://gutendex.com/books/?search=";
     private ConsumoAPI consumoAPI = new ConsumoAPI();
     private ConverteDados conversor = new ConverteDados();
     private String json;
@@ -43,7 +40,10 @@ public class Principal {
     }
 
     private String menu = """
-            \n------------------------------------------------------:
+            \n:----------------------------------------------------:
+            :---      LITERALURA - PESQUISE SEU LIVRO        ----:
+            :----------------------------------------------------:
+            
                1 - Buscar Livro pelo Título
                2 - Listar Livros Registrados
                3 - Listar Autores Registrados
@@ -65,101 +65,89 @@ public class Principal {
                     buscarLivroPorTitulo();
                     break;
                 case 2:
-//                    buscarPorAPI();
+                    listarLivrosRegistrados();
+                    break;
+                case 3:
+                    listarAutoresRegistrados();
                     break;
                 case 0:
-                    System.out.println("Encerrando o programa...");
+                    System.out.println("-> Encerrando o programa...");
                 default:
-                    System.out.println("----- opção inválida -----");
+                    System.out.println("         ----- opção inválida -----");
             }
         }
     }
 
+    //Lista todos os autores Registrados no Banco de Dados
+    private void listarAutoresRegistrados() {
+        Autor autor;
 
-//    private void buscarLivroPorTitulo() {
-//        System.out.print("-> Qual o nome do livro para a busca: ");
-//        String nomeLivro = imput.nextLine();
-//
-//        Optional<Livro> livroNoBanco = livrosRepositorio.findByTituloContainingIgnoreCase(nomeLivro);
-//
-//        if (livroNoBanco.isPresent()) {
-//            System.out.println("----- Este Livro consta Cadastrado -----");
-//            System.out.println(livroNoBanco.get());
-//        } else {
-//            try {
-//                json = consumoAPI.obterDados(URL + nomeLivro);
-//                InfoLivros infoLivros = conversor.obterDados(json, InfoLivros.class);
-//
-//                Optional<LivroDTO> dadosLivrosDTO = infoLivros.resultados()
-//                        .stream()
-//                        .filter(l -> l.titulo().equalsIgnoreCase(nomeLivro))
-//                        .findFirst();
-//
-//                if (dadosLivrosDTO.isPresent()) {
-//                    LivroDTO dadosLivros = dadosLivrosDTO.get();
-//                    Autor autor;
-//
-//                    if (!dadosLivros.autor().isEmpty()) {
-//                        AutorDTO dadosAutor = dadosLivros.autor().get(0);
-//
-//                        Optional<Autor> autorExistente = autorRepositorio.findByNomeContainingIgnoreCase(dadosAutor.nome());
-//                        autor = autorExistente.orElseGet(() -> {
-//                            Autor novoAutor = new Autor();
-//                            novoAutor.setNome(dadosAutor.nome());
-//                            novoAutor.setAnoNascimento(dadosAutor.anoDeNascimento());
-//                            novoAutor.setAnoFalecimento(dadosAutor.anoFalecimento());
-//                            return novoAutor;
-//                        });
-//                    } else {
-//                        autor = autorRepositorio.findByNomeContainingIgnoreCase("Desconhecido")
-//                                .orElseGet(() -> {
-//                                    Autor autorDesconhecido = new Autor();
-//                                    autorDesconhecido.setNome("Desconhecido");
-//                                    return autorDesconhecido;
-//                                });
-//                    }
-//
-//                    Livro novoLivro = new Livro();
-//                    novoLivro.setTitulo(dadosLivros.titulo());
-//                    novoLivro.setIdioma(dadosLivros.idiomas());
-//                    novoLivro.setnDownloads(dadosLivros.nDownloads());
-//
-//    //                  novoLivro.getAutores()(dadosLivros.autor());
-//                    livrosRepositorio.save(novoLivro);
-//
-//                    System.out.println("\n------ Livro SALVO com sucesso!");
-//                }else{
-//                    System.out.println("---- LIVRO INFORMADO NÃO ENCONTRADO -----");
-//                }
-//            } catch (Exception e) {
-//                System.out.println("----- ALGO DEU ERRADO AO TENTAR BUSCAR O LIVRO INFORMADO ----- " + e.getMessage());
-//            }
-//        }
-//    }
+        List<Autor> autores = autorRepositorio.findAll();
 
+        if (autores.isEmpty()) {
+            System.out.println("\n     --- Nenhum AUTOR Encontrado ---");
+        }else{
+            System.out.println("\n     ------- Listando Autores do Banco de Dados -------");
+            autores.stream()
+                    .sorted(Comparator.comparing(Autor::getNome))
+                    .forEach(System.out::println);
+        }
+    }
+
+    //Lista todos os livros registrados no Banco de Dados
+    private void listarLivrosRegistrados() {
+        Livro livro;
+        List<Livro> livrosBD = livrosRepositorio.findAll();
+
+        if (livrosBD.isEmpty()) {
+            System.out.println("\n     --- Nenhum LIVRO Encontrado ---");
+        } else {
+            System.out.println("\n     ------- Listando Livros do Banco de Dados -------\n");
+            livrosBD.stream()
+                    .sorted(Comparator.comparing(l -> l.getTitulo()))
+                    .forEach(System.out::println);
+        }
+    }
+
+
+    //Busca livro na API, especificado pelo usuário, e grava no Banco de Dados
     private void buscarLivroPorTitulo() {
         System.out.print("-> Qual o nome do livro para a busca: ");
         String nomeLivro = imput.nextLine();
 
-        json = consumoAPI.obterDados(URL + nomeLivro.toLowerCase().replace(" ", "%20"));
-        InfoLivros listaLivros = conversor.obterDados(json, InfoLivros.class);
+        var json = consumoAPI.obterDados(URL + nomeLivro.toLowerCase().replace(" ", "%20"));
+        InfoLivros resposta = conversor.obterDados(json, InfoLivros.class);
 
-        if (listaLivros.resultados() != null && !listaLivros.resultados().isEmpty()) {
-            Optional<LivroDTO> dadosLivrosDTO = listaLivros.resultados()
-                    .stream()
-                    .filter(l -> l.titulo().equalsIgnoreCase(nomeLivro))
-                    .findFirst();
-
-            if(dadosLivrosDTO.isPresent()){
-                LivroDTO livro = dadosLivrosDTO.get();
-                Autor autor;
-            }
-
+        if (resposta.result().isEmpty()) {
+            System.out.println("Nenhum livro encontrado com este nome.");
         } else {
-            System.out.println("Nenhum livro encontrado com esse nome.");
+            LivroDTO livrosDaAPI = resposta.result().get(0);
+            Livro livrosEntity = AtribuindoLivroDTOParaEntity(livrosDaAPI);
+            livrosRepositorio.save(livrosEntity);
+            System.out.println(livrosDaAPI.toString());
         }
     }
 
+    //Transferindo as informações do livro e autor da API para as entidades
+    private Livro AtribuindoLivroDTOParaEntity(LivroDTO livrosDaAPI) {
+        if (livrosDaAPI.autor().isEmpty()) {
+            throw new RuntimeException("--- O Livro deve conter pelo menos um Autor ---");
+        }
+        Livro livro = new Livro();
+        livro.setTitulo(livrosDaAPI.titulo());
+        livro.setIdioma(Collections.singletonList(livrosDaAPI.validarIdioma()));
+        livro.setnDownloads(livrosDaAPI.nDownloads());
 
+        Autor autor = AtribuindoAutorDTOparaEntity(livrosDaAPI.autor().get(0));
+        return livro;
+    }
 
+    private Autor AtribuindoAutorDTOparaEntity(AutorDTO autorDTO) {
+        Autor autor = new Autor();
+        autor.setNome(autorDTO.nome());
+        autor.setAnoNascimento(autorDTO.anoDeNascimento());
+        autor.setAnoFalecimento(autorDTO.anoFalecimento());
+
+        return autor;
+    }
 }

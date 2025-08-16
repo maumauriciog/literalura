@@ -8,6 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AutorRepositorio extends JpaRepository<Autor, Long> {
-    Optional<Autor> findByNomeContainingIgnoreCase(String nome);
+//    Optional<Autor> findByNomeContainingIgnoreCase(String nome);
 
 }

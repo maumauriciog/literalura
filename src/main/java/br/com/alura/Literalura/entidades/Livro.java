@@ -3,31 +3,37 @@ package br.com.alura.Literalura.entidades;
 import br.com.alura.Literalura.DTO.LivroDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.Collections;
 import java.util.List;
 
 @Entity
-@JsonIgnoreProperties(ignoreUnknown = true)
 @Table(name = "livros")
 public class Livro {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false, unique = true)
     private String titulo;
-    @Enumerated(EnumType.STRING)
-    private Idioma idioma;
+    private List<String> idioma;
     private Integer nDownloads;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    private Autor autores;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "autor_id")
+    private Autor autor;
 
-    public Livro() { }
+    public Livro() {
+    }
 
     public Livro(LivroDTO livroDTO) {
         this.titulo = livroDTO.titulo();
-        this.autores = (Autor) livroDTO.autor();
-        this.idioma = Idioma.deGutendex(livroDTO.idiomas().name());
+        this.autor = (Autor) livroDTO.autor();
+        this.idioma = Collections.singletonList(livroDTO.validarIdioma());
         this.nDownloads = livroDTO.nDownloads();
     }
 
@@ -47,11 +53,11 @@ public class Livro {
         this.titulo = titulo;
     }
 
-    public Idioma getIdioma() {
+    public List<String> getIdioma() {
         return idioma;
     }
 
-    public void setIdioma(Idioma idioma) {
+    public void setIdioma(List<String> idioma) {
         this.idioma = idioma;
     }
 
@@ -64,20 +70,11 @@ public class Livro {
     }
 
     public Autor getAutores() {
-        return autores;
+        return autor;
     }
 
     public void setAutores(Autor autores) {
-        this.autores = autores;
+        this.autor = autores;
     }
 
-    @Override
-    public String toString() {
-        return "Livro{" +
-                "titulo='" + titulo + '\'' +
-                ", idioma=" + idioma +
-                ", nDownloads=" + nDownloads +
-                ", autores=" + autores +
-                '}';
-    }
 }

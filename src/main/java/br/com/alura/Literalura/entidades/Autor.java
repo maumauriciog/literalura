@@ -1,23 +1,30 @@
 package br.com.alura.Literalura.entidades;
 
 import br.com.alura.Literalura.DTO.AutorDTO;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Table(name = "autores")
 public class Autor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nome;
     private int anoNascimento;
     private int anoFalecimento;
 
-    @OneToMany(mappedBy = "autores", fetch = FetchType.EAGER)
-    private List<Livro> livros;
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Livro> livros = new ArrayList<>();
 
     public Autor() {
     }
@@ -27,7 +34,6 @@ public class Autor {
         this.anoNascimento = autorDTO.anoDeNascimento();
         this.anoFalecimento = autorDTO.anoFalecimento();
     }
-
 
     public Long getId() {
         return id;
@@ -68,12 +74,4 @@ public class Autor {
     public void setLivros(List<Livro> livros) {
         this.livros = livros;
     }
-
-//    @Override
-//    public String toString() {
-//        return "\n----- Author -----\n-> Nome = '" + nome + '\'' +
-//                "-> Ano de Nascimento = " + anoNascimento +
-//                "-> Ano de Falecimento =" + anoFalecimento +
-//                "-> livros=" + livros;
-//    }
 }
