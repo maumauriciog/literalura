@@ -13,8 +13,8 @@ O Challenge LiterAlura, é um projeto final do curso de java - spring boot. Ofer
 
 > o usuário vai poder realizar a pesquisa por livros quantas vezes for necessário, e enquanto o programa estiver em execução. Não há necessidade de encerrar o programa para obter uma nova consulta.
 
-## Compilando e Executando o Conversor de Moedas
-Certifique-se de ter o [intelliJ](https://www.jetbrains.com/idea/download/?section=windows) e a biblioteca [GSON](https://mvnrepository.com/search?q=GSON) instalado / baixado, e siga as instruções conforme abaixo:
+## Compilando e Executando o LiterAlura
+Certifique-se de ter o [intelliJ](https://www.jetbrains.com/idea/download/?section=windows) e a biblioteca [guten](https://mvnrepository.com/search?q=GSON) instalado / baixado, e siga as instruções conforme abaixo:
 1. Faça o download do código fonte:
 
 ```sh
@@ -46,20 +46,19 @@ https://github.com/maumauriciog/challenge_conversor_de_moedas
 > O programa funciona somente utilizando uma IDE, neste caso, o [intelliJ](https://www.jetbrains.com/idea/download/?section=windows) com a biblioteca [GSON](https://mvnrepository.com/search?q=GSON) instalada.
 
 ## Utilizando o Programa em Execução
-O usuário terá de escolher uma das 06(seis) opções disponíveis conforme abaixo:
+O usuário terá de escolher uma das 05(cinco) opções disponíveis conforme abaixo:
 ```bash
 -----------------------------------------------
----- SEJA BEM VINDO AO CONVERSOR DE MOEDAS ----
+---    LITERALURA - PESQUISE SEU LIVRO      ---
 -----------------------------------------------
-1). Dolar -> Peso Argentino
-2). Peso Argentino -> Dolar
-3). Dolar -> Real Brasileiro
-4). Real Brasileiro -> Dolar
-5). Dolar -> Peso Colombiano
-6). Peso Colombiano -> Dolar
-7). Sair
+   1 - Buscar Livro pelo Título
+   2 - Listar Livros Registrados
+   3 - Listar Autores Registrados
+   4 - Listar Autores Vivos em um Determinado Ano
+   5 - Listar Livros em Um Determinado Idioma
+   0 - Sair
 
--> Escolha uma opção válida: 4
+-> Escolha uma opção válida: 1
 -> Digite o valor que deseja converter: 100
 ```
 ```bash
