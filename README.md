@@ -3,50 +3,35 @@ O Challenge LiterAlura, é um projeto final do curso de java - spring boot. Ofer
 
 - **objetivo**
 
-> Via console, o usuário vai entrar com a opção que deseja dentro desse menu, e depois disso vai informar qual é o valor que deseja converter.
+> Pesquisar um determinado livro e salvar no banco de dados, e realizar pesquisas conforme opções no menu.
 
 - **o que encontrar**
 
-> o usuário terá 05(cinco) opçoes de escolha para a pesquisa do livro, gravar no banco de dados e demais pesquisas.
+> o usuário terá 05(cinco) opçoes de escolha para a pesquisa do livro, gravar no banco de dados, visualizar todos os livros que estão no banco de dados, listar autores, pesquisar autores não falecidos, e buscar livro por uma determinada linguagem.
 
 - **customizável**
 
-> o usuário vai poder realizar a pesquisa por livros quantas vezes for necessário, e enquanto o programa estiver em execução. Não há necessidade de encerrar o programa para obter uma nova consulta.
+> o usuário vai poder realizar a pesquisa e esolher qualquer opção, enquanto o programa estiver em execução. Não há necessidade de encerrar o programa para obter uma nova consulta e armazenar o livro.
 
 ## Compilando e Executando o LiterAlura
-Certifique-se de ter o [intelliJ](https://www.jetbrains.com/idea/download/?section=windows) e a biblioteca [guten](https://mvnrepository.com/search?q=GSON) instalado / baixado, e siga as instruções conforme abaixo:
-1. Faça o download do código fonte:
+Certifique-se de ter o [intelliJ](https://www.jetbrains.com/idea/download/?section=windows) e o [pgAdmin4](https://www.pgadmin.org/download/) instalado em seu computador. Siga as instruções abaixo:
+1. Faça o download do código fonte, depois descompacte o arquivo:
 
 ```sh
-https://github.com/maumauriciog/challenge_conversor_de_moedas
+https://github.com/maumauriciog/literalura
 ```
 
-2. Instale a biblioteca GSON, após o download (instale após abrir o código fonte no intelliJ - o procódigo fonte precisa desta biblioteca instalada para garantir seu funcionamento):
+2. Abra o programa pgAdmin4 e crie o banco de dados chamado literalura.
 
-&emsp;&emsp;<img src="pictures/scrA.png" width="210">&emsp;<img src="pictures/scrB.png" width="243">&emsp;<img src="pictures/scrC.png" width="238">
+3. Execute o programa intelliJ e abra a pasta do código fonte baixado.
 
-```
-- vá ao menu File do intelliJ e escolha a opção 'Project Structure'
-- click e 'Modules'
-- click em 'Dependencies' no lado direito
-- click no sinal de '+'
-- click na opção 'JARs or Directories'
-- selecione a biblioteca GSON baixada anteriormente
-```
-
-3. Execute o programa:
-&emsp;&emsp;<img src="pictures/scrD.png" width="838">
-
-```
-- click em 'Run Main'
-- ou Shift F10
-```
+4. Aguarde até sincronizar todas as dependências.
 
 > [!IMPORTANT]
-> O programa funciona somente utilizando uma IDE, neste caso, o [intelliJ](https://www.jetbrains.com/idea/download/?section=windows) com a biblioteca [GSON](https://mvnrepository.com/search?q=GSON) instalada.
+> O programa funciona somente utilizando uma IDE, neste caso, o [intelliJ](https://www.jetbrains.com/idea/download/?section=windows) com o administrador de banco de dados [pgAdmin4](https://www.pgadmin.org/download/) instalado.
 
 ## Utilizando o Programa em Execução
-O usuário terá de escolher uma das 05(cinco) opções disponíveis conforme abaixo:
+O usuário poderá escolher uma das 05(cinco) opções disponíveis conforme abaixo:
 ```bash
 -----------------------------------------------
 ---    LITERALURA - PESQUISE SEU LIVRO      ---
@@ -58,8 +43,8 @@ O usuário terá de escolher uma das 05(cinco) opções disponíveis conforme ab
    5 - Listar Livros em Um Determinado Idioma
    0 - Sair
 
--> Escolha uma opção válida: 1
--> Digite o valor que deseja converter: 100
+-> Escolha uma opção: 1
+-> Qual o Nome do Livro para a Busca: dom quixote
 ```
 ```bash
      *** Resultado da Operação ***
@@ -67,7 +52,7 @@ O usuário terá de escolher uma das 05(cinco) opções disponíveis conforme ab
 ```
 
 ## Contribuindo
-Esperamos que outras organizações possam se beneficiar do projeto. Agradecemos qualquer contribuição da comunidade.
+Esperamos que outras organizações / usuários possam se beneficiar do projeto. Agradecemos qualquer contribuição da comunidade.
 
 ## Contato
 Temos os seguintes canais para contato:
