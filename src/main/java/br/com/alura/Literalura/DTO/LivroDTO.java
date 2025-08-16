@@ -24,12 +24,9 @@ public record LivroDTO(
 
         @Override
         public String toString() {
-                return "\n----------------------------\n" +
-                        "---- Livro Encontrado -----\n" +
-                        "-\n" +
-                        "---> Título: " + titulo + "\n" +
-                        "---> Autor: " + autor + "\n" +
-                        "---> Idioma: " + validarIdioma() + "\n" +
-                        "---> N. Downoads: " + nDownloads + "\n";
+                return "    -> Título: " + titulo + "\n" +
+                        "    -> Autor: " + autor + "\n" +
+                        "    -> Idioma: " + idioma + "\n" +
+                        "    -> N. Downoads: " + nDownloads + "\n\n          -----\n";
         }
 }

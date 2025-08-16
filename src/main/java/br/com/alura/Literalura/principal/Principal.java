@@ -95,7 +95,7 @@ public class Principal {
         if (livros == null) {
             System.out.println("\n   ------- NÃO HÁ LIVROS COM O IDIOMA " + idioma + ", CADASTRADO NO BANCO DE DADOS -------");
         } else {
-            livros.forEach(System.out::println);
+            System.out.println(livros.toString());
         }
     }
 
@@ -111,7 +111,7 @@ public class Principal {
             System.out.println("\n   ------- NÃO HÁ REGISTRO DE AUTORES CADASTRADO NO BANCO DE DADOS -------");
         } else {
             System.out.println("\n  <------- Listando AUTORES VIVOS A PARTIR DO ANO DE " + ano + " do Banco de Dados ------->");
-            autoresVivo.forEach(System.out::println);
+            System.out.println(autoresVivo.toString());;
         }
     }
 
@@ -147,10 +147,9 @@ public class Principal {
         }
     }
 
-
     //Busca livro na API, especificado pelo usuário, e grava no Banco de Dados
     private void buscarLivroPorTitulo() {
-        System.out.print("-> Qual o Nome do Livro para Busca: ");
+        System.out.print("   -> Qual o Nome do Livro para Busca: ");
         String nomeLivro = imput.nextLine();
 
         var json = consumoAPI.obterDados(URL + nomeLivro.toLowerCase().replace(" ", "%20"));
@@ -159,10 +158,11 @@ public class Principal {
         if (resposta.result().isEmpty()) {
             System.out.println("\n    <----- NENHUM LIVRO ENCONTRADO COM ESTE NOME ! ----->");
         } else {
+            System.out.println("\n    **** LIVRO ENCONTRADO ****");
             LivroDTO livrosDaAPI = resposta.result().get(0);
             Livro livrosEntity = AtribuindoLivroDTOParaEntity(livrosDaAPI);
             livrosRepositorio.save(livrosEntity);
-            System.out.println(livrosDaAPI);
+            System.out.println(livrosDaAPI.toString());
         }
     }
 
@@ -177,7 +177,6 @@ public class Principal {
         livro.setnDownloads(livrosDaAPI.nDownloads());
 
         Autor autor = AtribuindoAutorDTOparaEntity(livrosDaAPI.autor().get(0));
-
         return livro;
     }
 
