@@ -21,7 +21,6 @@ import java.util.Scanner;
 public class Principal {
     @Autowired
     private final LivrosRepositorio livrosRepositorio;
-
     @Autowired
     private final AutorRepositorio autorRepositorio;
 
@@ -75,11 +74,11 @@ public class Principal {
                 case 5:
                     LivroNoIdioma();
                     break;
-
                 case 0:
-                    System.out.println("-> Encerrando o programa...");
+                    System.out.println("\n-> Encerrando o programa !...\n");
+                    break;
                 default:
-                    System.out.println("        <----- OPÇÃO INVÁLIDA ----->");
+                    System.out.println("\n        <----- OPÇÃO INVÁLIDA ----->\n");
             }
         }
     }
@@ -87,10 +86,20 @@ public class Principal {
 
     //Lista TODOS OS LIVROS NO IDIOMA ESPECIFICADO PELO USUÁRIO
     private void LivroNoIdioma() {
+        System.out.println("-> Informe o Idioma do livro, optando pelas opções conforme abaixo, para a Pesquisa: ");
+        System.out.print("        EN (Inglês) - ES (espanhol) - FR (francês) ou PT (português) ");
+        var idioma = imput.nextLine();
 
+        List<Livro> livros = livrosRepositorio.findByIdioma(idioma);
+
+        if (livros == null) {
+            System.out.println("\n   ------- NÃO HÁ LIVROS COM O IDIOMA " + idioma + ", CADASTRADO NO BANCO DE DADOS -------");
+        } else {
+            livros.forEach(System.out::println);
+        }
     }
 
-    //Lista TODOS OS AUTORES VIVOS no ano especificado pelo usuário
+    //Lista TODOS OS AUTORES VIVOS no Ano especificado pelo usuário
     private void AutoresVivosNesteAno() {
         System.out.print("-> Informe o Ano Para a Pesquisa: ");
         var ano = imput.nextInt();
@@ -98,9 +107,9 @@ public class Principal {
 
         List<Autor> autoresVivo = autorRepositorio.ListaAutoresVivosApartAno(ano);
 
-        if (autoresVivo.isEmpty()){
+        if (autoresVivo.isEmpty()) {
             System.out.println("\n   ------- NÃO HÁ REGISTRO DE AUTORES CADASTRADO NO BANCO DE DADOS -------");
-        }else {
+        } else {
             System.out.println("\n  <------- Listando AUTORES VIVOS A PARTIR DO ANO DE " + ano + " do Banco de Dados ------->");
             autoresVivo.forEach(System.out::println);
         }
@@ -131,7 +140,7 @@ public class Principal {
         if (livrosBD.isEmpty()) {
             System.out.println("\n     --- Nenhum LIVRO Encontrado ---");
         } else {
-            System.out.println("\n     ------- Listando Livros do Banco de Dados -------\n");
+            System.out.println("\n    ------- Livros ARMAZENADOS no Banco de Dados -------\n");
             livrosBD.stream()
                     .sorted(Comparator.comparing(l -> l.getTitulo()))
                     .forEach(System.out::println);
@@ -141,26 +150,26 @@ public class Principal {
 
     //Busca livro na API, especificado pelo usuário, e grava no Banco de Dados
     private void buscarLivroPorTitulo() {
-        System.out.print("-> Qual o nome do livro para a busca: ");
+        System.out.print("-> Qual o Nome do Livro para Busca: ");
         String nomeLivro = imput.nextLine();
 
         var json = consumoAPI.obterDados(URL + nomeLivro.toLowerCase().replace(" ", "%20"));
         InfoLivros resposta = conversor.obterDados(json, InfoLivros.class);
 
         if (resposta.result().isEmpty()) {
-            System.out.println("Nenhum livro encontrado com este nome.");
+            System.out.println("\n    <----- NENHUM LIVRO ENCONTRADO COM ESTE NOME ! ----->");
         } else {
             LivroDTO livrosDaAPI = resposta.result().get(0);
             Livro livrosEntity = AtribuindoLivroDTOParaEntity(livrosDaAPI);
             livrosRepositorio.save(livrosEntity);
-            System.out.println(livrosDaAPI.toString());
+            System.out.println(livrosDaAPI);
         }
     }
 
     //Transferindo as informações do livro e autor da API para as entidades
     private Livro AtribuindoLivroDTOParaEntity(LivroDTO livrosDaAPI) {
         if (livrosDaAPI.autor().isEmpty()) {
-            throw new RuntimeException("--- O Livro deve conter pelo menos um Autor ---");
+            throw new RuntimeException("\n    <--- O LIVRO DEVE CONTER UM AUTOR, NO MÍNIMO ! --->");
         }
         Livro livro = new Livro();
         livro.setTitulo(livrosDaAPI.titulo());
@@ -168,6 +177,7 @@ public class Principal {
         livro.setnDownloads(livrosDaAPI.nDownloads());
 
         Autor autor = AtribuindoAutorDTOparaEntity(livrosDaAPI.autor().get(0));
+
         return livro;
     }
 
@@ -176,6 +186,7 @@ public class Principal {
         autor.setNome(autorDTO.nome());
         autor.setAnoNascimento(autorDTO.anoDeNascimento());
         autor.setAnoFalecimento(autorDTO.anoFalecimento());
+        autorRepositorio.save(autor);
 
         return autor;
     }

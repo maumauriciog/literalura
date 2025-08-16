@@ -24,7 +24,7 @@ public class Autor {
     private int anoFalecimento;
 
     @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Livro> livros = new ArrayList<>();
+    private List<Livro> livros;
 
     public Autor() {
     }
@@ -33,6 +33,7 @@ public class Autor {
         this.nome = autorDTO.nome();
         this.anoNascimento = autorDTO.anoDeNascimento();
         this.anoFalecimento = autorDTO.anoFalecimento();
+        this.livros = new ArrayList<>();
     }
 
     public Long getId() {

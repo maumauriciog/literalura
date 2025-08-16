@@ -18,7 +18,7 @@ public record LivroDTO(
                 if(idioma!=null && idioma.isEmpty()){
                         return idioma.get(0);
                 }else{
-                        return "-- Idioma Desconhecido --";
+                        return null;
                 }
         }
 
