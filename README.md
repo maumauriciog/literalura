@@ -13,6 +13,13 @@ O Challenge LiterAlura, é um projeto final do curso de java - spring boot. Ofer
 
 > o usuário vai poder realizar a pesquisa e esolher qualquer opção, enquanto o programa estiver em execução. Não há necessidade de encerrar o programa para obter uma nova consulta e armazenar o livro.
 
+- **Tecnologias**
+
+> Java
+> Spring Boot
+> JPA/Hibernate
+> API - Gutendex.
+
 ## Compilando e Executando o LiterAlura
 Certifique-se de ter o [intelliJ](https://www.jetbrains.com/idea/download/?section=windows) e o [pgAdmin4](https://www.pgadmin.org/download/) instalado em seu computador. Siga as instruções abaixo:
 1. Faça o download do código fonte, depois descompacte o arquivo:
