@@ -85,9 +85,9 @@ public class Principal {
 
     //Lista TODOS OS LIVROS NO IDIOMA ESPECIFICADO PELO USUÁRIO
     private void LivroNoIdioma() {
-        System.out.println("-> Informe o Idioma do livro, optando pelas opções conforme abaixo, para a Pesquisa: ");
-        System.out.print("        EN (Inglês) - ES (espanhol) - FR (francês) ou PT (português) ");
-        var idioma = imput.nextLine();
+        System.out.println("-> Informe o Idioma do livro, opções conforme abaixo, para a Pesquisa: ");
+        System.out.println("     EN (Inglês) - ES (espanhol) - FR (francês) ou PT (português) ");
+        var idioma = imput.nextLine().trim().replaceAll("[^a-zA-Z\\-]", "");
 
         List<Livro> livros = livrosRepositorio.ListarPorIdioma(idioma);
 
